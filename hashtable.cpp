@@ -105,8 +105,16 @@ void rehash(Node** &hashT, int &size) {
       }
     }
   }
+  for (int a = 0; a < size; a++) { //delete nodes
+    Node* current = hashT[a];
+    if (current != NULL) {
+      Node* next = current->next;
+      delete current;
+      current = next;
+    }
+  }
   size = newSize;
-  delete hashT; //does this work
+  delete hashT;
   hashT = newHash;
 }
     
@@ -151,6 +159,7 @@ void deleteStudent(Node** &hashT, int size) { //find student based on id, then D
       Node* temp = current;
       current = current->next;
       delete temp;
+      cout << "deleted";
     } else if (current->next != NULL) {
       if (deleteID == current->next->stud->studentID) {
 	//if the next node is to be deleted
@@ -160,8 +169,6 @@ void deleteStudent(Node** &hashT, int size) { //find student based on id, then D
       } else {
 	current = current->next;
       }
-    } else {
-      cout << "Student ID not found" << endl;
     }
   }
 }
