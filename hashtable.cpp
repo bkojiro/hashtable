@@ -83,7 +83,7 @@ void hashFunction(Student* newStud, Node** &hashT, int &size) { //map student id
     current = current->next;
   }
   //if there is 4 nodes for one index, reshash data into new table
-  if (collisions >= 1) {
+  if (collisions >= 3) {
     rehash(hashT, size);
   }
 }
@@ -158,14 +158,16 @@ void deleteStudent(Node** &hashT, int size) { //find student based on id, then D
       //if head is to be deleted, don't need to relink previous node
       Node* temp = current;
       current = current->next;
+      hashT[deleteKey] = current;
       delete temp;
-      cout << "deleted";
+      return;
     } else if (current->next != NULL) {
       if (deleteID == current->next->stud->studentID) {
 	//if the next node is to be deleted
 	Node* temp = current->next;
 	current->next = current->next->next;
 	delete temp;
+	return;
       } else {
 	current = current->next;
       }
